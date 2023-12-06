@@ -4,12 +4,19 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-    const [count, setCount] = useState(0)
+
+    const [isInputVisible, setIsInputVisible] = useState(false);
+
+    const toggleInputVisibility = () => {
+        setIsInputVisible(!isInputVisible);
+    }
 
     return (
         <>
             <Header />
-            <PlayerOne />
+            <PlayerOne
+                isInputVisible={isInputVisible}
+                toggleInputVisibility={toggleInputVisibility} />
             <PlayerTwo />
 
             {/* <div>
@@ -43,19 +50,18 @@ function Header() {
     )
 }
 
-function PlayerOne() {
-
+function PlayerOne({ isInputVisible, toggleInputVisibility }) {
     return (
         <div className="card-one">
             <p>Player 1</p>
             <h1>8000</h1>
             <div className="operations">
-                <Plus />
-                <Minus />
+                <Plus onClick={toggleInputVisibility} />
+                <Minus onClick={toggleInputVisibility} />
+                <InputField isVisible={isInputVisible} />
             </div>
         </div>
     );
-
 }
 
 function PlayerTwo() {
@@ -66,22 +72,29 @@ function PlayerTwo() {
             <div className="operations">
                 <Plus />
                 <Minus />
+                <InputField />
             </div>
         </div>
     );
 }
 
-function Plus() {
+function Plus({ onClick }) {
     return (
-        <span><CiCirclePlus /></span>
+        <span onClick={onClick}><CiCirclePlus /></span>
     );
 }
 
-function Minus() {
+function Minus({ onClick }) {
     return (
         <span><CiCircleMinus /></span>
     );
 
+}
+
+function InputField() {
+    return (
+        <input type="text"></input>
+    );
 }
 
 function CoinFlip() {
